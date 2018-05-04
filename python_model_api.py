@@ -7,12 +7,16 @@
 import numpy as np
 from sklearn import datasets
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.model_selection import cross_val_score
 
 iris = datasets.load_iris()
 X, y = iris.data, iris.target
 
 clf = GradientBoostingClassifier()
 clf.fit(X, y)
+
+print(cross_val_score(clf, X, y, cv=5))
+
 
 
 ###############################################################################
@@ -21,13 +25,15 @@ clf.fit(X, y)
 from sklearn.externals import joblib
 
 # Save the pickle file to the file system
-# You can then point the 
 joblib.dump(clf, 'model.pkl')
+
 
 
 ###############################################################################
 # Build the API Call
 ###############################################################################
+import numpy as np
+from sklearn.externals import joblib
 from flask import Flask, request, jsonify
 import pandas as pd
 
@@ -51,5 +57,7 @@ def GetPrediction():
 
 
 if __name__ == '__main__':
+    # And load it back up
+    clf = joblib.load('model.pkl')
     app.run(port=5003)
 
