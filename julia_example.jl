@@ -14,7 +14,8 @@ y = convert(Array, iris[:Species])
 
 using ScikitLearn
 using ScikitLearn: fit!, predict
-@sk_import linear_model: LogisticRegression
+@sk_import line
+ar_model: LogisticRegression
 
 # Then fit the model
 model = LogisticRegression(fit_intercept=true)
